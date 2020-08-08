@@ -105,6 +105,8 @@
     <!-- Dependencies version -->
     <fortress.realm.version>2.0.5</fortress.realm.version>
     <cxf.version>3.3.6</cxf.version>
+    <fortress.realm.version>2.0.4-SNAPSHOT</fortress.realm.version>
+    <cxf.version>3.2.6</cxf.version>
     <httpclient.version>3.1</httpclient.version>
     <java.version>1.8</java.version>
     <javadoc.version>2.9.1</javadoc.version>
@@ -196,6 +198,7 @@
       <scope>test</scope>
     </dependency>
 
+<<<<<<< HEAD
     <dependency>
       <groupId>com.sun.xml.bind</groupId>
       <artifactId>jaxb-impl</artifactId>
@@ -431,6 +434,69 @@
 <!--                  <arg file="./src/main/resources/FortressRestServerPolicy.xml" />-->
                 </java>
               </target>
+=======
+  <profiles>
+    <profile>
+      <id>build-with-vuejs</id>
+      <activation>
+        <activeByDefault>false</activeByDefault>
+        <property>
+          <name>buildVuejs</name>
+        </property>
+      </activation>
+      <build>
+        <finalName>${project.artifactId}-${project.version}</finalName>
+        <plugins>
+    
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-jar-plugin</artifactId>
+          </plugin>
+    
+        <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>exec-maven-plugin</artifactId>
+            <version>1.6.0</version>
+            <executions>
+                <execution>
+                    <id>npm-install</id>
+                    <phase>compile</phase>
+                    <goals>
+                        <goal>exec</goal>
+                    </goals>
+                    <configuration>
+                        <executable>npm</executable>
+                        <workingDirectory>${project.basedir}/embrasure</workingDirectory>
+                        <arguments>
+                            <argument>install</argument>
+                        </arguments>
+                    </configuration>
+                </execution>
+                <execution>
+                    <id>npm-build</id>
+                    <phase>compile</phase>
+                    <goals>
+                        <goal>exec</goal>
+                    </goals>
+                    <configuration>
+                        <executable>npm</executable>
+                        <workingDirectory>${project.basedir}/embrasure</workingDirectory>
+                        <arguments>
+                            <argument>run</argument>
+                            <argument>build</argument>
+                        </arguments>
+                    </configuration>
+                </execution>
+            </executions>
+        </plugin>
+
+          <!-- Create the fortress-rest web archive -->
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-war-plugin</artifactId>
+            <version>2.4</version>
+            <!-- this is needed to pickup the context.xml in META-INF: -->
+            <configuration>
 =======
   <profiles>
     <profile>
